@@ -1,10 +1,10 @@
 import Observer from "./lib/observer.js"
 import Log from "../lib/log.js"
-import Message from "./lib/message.js"
+import Config from "../lib/config.js"
 
 class LaravelNotify {
     static async start () {
-        Message.start()
+        await Config.start()
         if (this.checkUri()) {
             Log('uri match, sniff')
             await Observer.start()

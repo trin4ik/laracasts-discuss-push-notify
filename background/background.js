@@ -9,7 +9,7 @@ class LaravelNotify {
 
     static async start () {
         Log('start')
-        await Config.load()
+        await Config.start()
         await User.fetch()
         Request.start()
         Notify.start()
