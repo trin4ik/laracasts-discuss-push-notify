@@ -1,6 +1,6 @@
 # Laracasts Discuss PUSH Notifications
 Simple [Google Chrome](https://www.google.com/chrome/) extension, adds "Follow by PUSH" button in https://laracasts.com/discuss. \
-Work only on desktops or laptops, use system notification center
+Works only on desktops or laptops, use system notification center
 
 <table>
 <tr>
@@ -25,7 +25,7 @@ Work only on desktops or laptops, use system notification center
 ## Whats happend?
 Laracasts discuss provide to follow on thread by email, it is not always convenient. \
 This extension works only local JS, checks new answers in thread to which you subscribed and send Push notification, if any new answers. \
-**NONE ANY DATA SEND TO EXTERNAL SERVER**
+**NON ANY DATA SEND TO EXTERNAL SERVER**
 
 ## How it works?
 Extension adds button "Follow by push" and save threads to localstorage. In background once every 30 seconds fetchs all threads, witch you subscribed to and check updates. \
