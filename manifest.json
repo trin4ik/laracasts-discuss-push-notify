@@ -1,0 +1,53 @@
+{
+    "manifest_version": 2,
+    "name": "Laracasts Discuss notify",
+    "version": "0.1",
+    "description": "add button «notify» for answers on topics by push notifications",
+    "background": {
+        "page": "background/index.html"
+    },
+    "permissions": [
+        "storage",
+        "notifications",
+        "tabs"
+    ],
+    "content_scripts": [
+        {
+            "css": [
+                "index.css"
+            ],
+            "js": [
+                "index.js"
+            ],
+            "matches": [
+                "https://laracasts.com/discuss*",
+                "https://unpkg.com/*"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "web_accessible_resources": [
+        "lib/*",
+        "vendor/*",
+        "page/*"
+    ],
+    "externally_connectable": {
+        "matches": [
+            "https://laracasts.com/discuss*"
+        ],
+        "accepts_tls_channel_id": false
+    },
+    "options_ui": {
+        "page": "options/index.html",
+        "open_in_tab": false
+    },
+    "icons": {
+        "16": "16.png",
+        "32": "32.png",
+        "48": "48.png",
+        "128": "128.png"
+    },
+    "browser_action": {
+        "default_popup": "options/index.html"
+    }
+}
