@@ -37,5 +37,8 @@ You will not receive push, if author of answer is you. Information about your id
 * [ ] vinaigrette code. need to refactor code in one style with background, content and options page of extension 
 * [ ] quick-and-dirty code. need to refactor project, include webpack etc
 * [ ] strange message system. need to refactor "communication" with extension modules. for example, at now hard to dispatch events from options page to content
+* [ ] no sync with different device. need to add feature for syncing settings and list of subscribed threads to cloud
 
+---
 
+any remarks, comments, bugs and PR are welcome
