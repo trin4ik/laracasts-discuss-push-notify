@@ -21,3 +21,21 @@ Work only on desktops or laptops, use system notification center
 <p align="center">
 	<img src="https://habrastorage.org/webt/en/ky/1a/enky1alpxxjsza2xb1a-zyarkde.jpeg" />
 </p>
+
+## Whats happend?
+Laracasts discuss provide to follow on thread by email, it is not always convenient. \
+This extension works only local JS, checks new answers in thread to which you subscribed and send Push notification, if any new answers. \
+**NONE ANY DATA SEND TO EXTERNAL SERVER**
+
+## How it works?
+Extension adds button "Follow by push" and save threads to localstorage. In background once every 30 seconds fetchs all threads, witch you subscribed to and check updates. \
+Threads with no updates  in 3 days, autoremoved. \
+You will not receive push, if author of answer is you. Information about your id take from laracasts web page automatically
+
+## Whats wrong?
+
+* [ ] vinaigrette code. need to refactor code in one style with background, content and options page of extension 
+* [ ] quick-and-dirty code. need to refactor project, include webpack etc
+* [ ] strange message system. need to refactor "communication" with extension modules. for example, at now hard to dispatch events from options page to content
+
+
