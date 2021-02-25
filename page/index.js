@@ -4,7 +4,6 @@ import Config from "../lib/config.js"
 
 class LaravelNotify {
     static async start () {
-        await Config.start()
         if (this.checkUri()) {
             Log('uri match, sniff')
             await Observer.start()
