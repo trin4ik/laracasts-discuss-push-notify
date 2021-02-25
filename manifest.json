@@ -1,8 +1,8 @@
 {
     "manifest_version": 2,
-    "name": "Laracasts Discuss notify",
+    "name": "Laracasts Discuss Push Notify",
     "version": "0.1",
-    "description": "add button «notify» for answers on topics by push notifications",
+    "description": "add  push notifications for thread answers",
     "background": {
         "page": "background/index.html"
     },
@@ -42,10 +42,10 @@
         "open_in_tab": false
     },
     "icons": {
-        "16": "16.png",
-        "32": "32.png",
-        "48": "48.png",
-        "128": "128.png"
+        "16": "image/16.png",
+        "32": "image/32.png",
+        "48": "image/48.png",
+        "128": "image/128.png"
     },
     "browser_action": {
         "default_popup": "options/index.html"

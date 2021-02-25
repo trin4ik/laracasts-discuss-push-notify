@@ -4,6 +4,7 @@ import htm from '../vendor/htm.js'
 import Log from "../lib/log.js"
 import Config from "../lib/config.js"
 import Thread from "../lib/thread.js"
+import Notify from "../lib/notify.js"
 
 const html = htm.bind(h)
 
@@ -40,6 +41,10 @@ function App (props) {
         }
     }
 
+    const handlerTest = () => {
+        Notify.test()
+    }
+
     return html`
         <div class="row">
             <div class="form-item">
@@ -49,9 +54,12 @@ function App (props) {
                 </div>
             </div>
         </div>
+        <div class="row title">
+            <h2>Notifications:</h2>
+            <button class="test" onClick="${handlerTest}">test notify</button>
+        </div>
         <div class="row">
             <div id="list">
-                <h2>Notifications:</h2>
                 ${threads.filter(item => !item.remove).length ? html`
                     <ul>
                         ${threads.map(item => html`
