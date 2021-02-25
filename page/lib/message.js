@@ -1,6 +1,6 @@
 import Log from "../../lib/log.js"
 
-const extensionId = 'bngbhijbcgoiodnhonfkojgbmiljhjnj'
+const extensionId = 'eakcihlfbceiaenhagoadnpkdejdjong'
 
 class Message {
     static async send (action, data) {
