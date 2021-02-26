@@ -8,8 +8,7 @@
     },
     "permissions": [
         "storage",
-        "notifications",
-        "tabs"
+        "notifications"
     ],
     "content_scripts": [
         {
