@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Laracasts Discuss Push Notify",
-    "version": "0.1",
+    "version": "0.2",
     "description": "add  push notifications for thread answers",
     "background": {
         "page": "background/index.html"
