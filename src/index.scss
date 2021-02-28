@@ -10,16 +10,16 @@ button.tw-border-blue-light.active {
     right: 30px;
     cursor: pointer;
     z-index: 1;
-}
 
-.follow-by-push-reply label {
-    flex: 1;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    font-size: .9rem;
-}
+    label {
+        flex: 1;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        font-size: .9rem;
+    }
 
-.follow-by-push-reply .switch {
-    top: 7px;
+    .switch {
+        top: 7px;
+    }
 }

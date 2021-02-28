@@ -1,3 +1,5 @@
+import './index.scss'
+
 var extid = document.createElement('script');
 extid.textContent = "var extensionId = " + JSON.stringify(chrome.runtime.id);
 (document.head || document.documentElement).appendChild(extid);
