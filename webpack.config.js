@@ -1,15 +1,16 @@
 const path = require('path')
 const CopyPlugin = require('copy-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const { VueLoaderPlugin } = require('vue-loader')
+const webpack = require('webpack')
 
 module.exports = {
+    mode: 'production',
     entry: {
-        index: '/src/index.js',
         background: '/src/background/index.js',
-        sniffer: '/src/sniffer/index.js',
         settings: '/src/settings/index.js',
+        page: '/src/page/index.js',
     },
     module: {
         rules: [
@@ -31,15 +32,25 @@ module.exports = {
                     "css-loader",
                     "sass-loader",
                 ]
+            },
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader'
             }
         ]
     },
     plugins: [
+        new webpack.DefinePlugin({
+            __VUE_OPTIONS_API__: true,
+            __VUE_PROD_DEVTOOLS__: false
+        }),
+        new VueLoaderPlugin(),
         new MiniCssExtractPlugin(),
         new CleanWebpackPlugin(),
         new CopyPlugin({
             patterns: [
                 { from: "src/image", to: "image" },
+                { from: "src/settings/index.html", to: "settings.html" },
             ],
         }),
     ],
@@ -51,12 +62,8 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
         filename: (pathData) => {
             switch (pathData.chunk.name) {
-                case 'index':
-                    return 'index.js'
-                case 'css':
-                    return 'index.css'
                 default:
-                    return '[name]/index.js'
+                    return '[name].js'
             }
         },
     },

@@ -1,10 +1,13 @@
 {
     "manifest_version": 2,
     "name": "Laracasts Discuss Push Notify",
-    "version": "0.2",
+    "version": "0.3",
     "description": "add  push notifications for thread answers",
     "background": {
-        "page": "background/index.html"
+        "scripts": [
+            "background.js"
+        ],
+        "persistent": false
     },
     "permissions": [
         "storage",
@@ -12,33 +15,20 @@
     ],
     "content_scripts": [
         {
-            "css": [
-                "index.css"
-            ],
             "js": [
-                "index.js"
+                "page.js"
+            ],
+            "css": [
+                "page.css"
             ],
             "matches": [
-                "https://laracasts.com/discuss*",
-                "https://unpkg.com/*"
+                "https://laracasts.com/discuss*"
             ],
             "run_at": "document_end"
         }
     ],
-    "web_accessible_resources": [
-        "lib/*",
-        "vendor/*",
-        "page/*"
-    ],
-    "externally_connectable": {
-        "matches": [
-            "https://laracasts.com/discuss*"
-        ],
-        "accepts_tls_channel_id": false
-    },
     "options_ui": {
-        "page": "options/index.html",
-        "open_in_tab": false
+        "page": "settings.html"
     },
     "icons": {
         "16": "image/16.png",
@@ -47,6 +37,6 @@
         "128": "image/128.png"
     },
     "browser_action": {
-        "default_popup": "options/index.html"
+        "default_popup": "settings.html"
     }
 }

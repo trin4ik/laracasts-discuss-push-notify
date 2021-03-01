@@ -1,6 +1,6 @@
 import Config from "./config.js"
 import Thread from "./thread.js"
-import Log from "./log.js"
+import Log from "../both/log.js"
 
 class Notify {
     static start () {

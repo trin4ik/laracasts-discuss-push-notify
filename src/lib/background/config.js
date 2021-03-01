@@ -1,10 +1,10 @@
-import Log from "./log.js"
+import Log from "../both/log.js"
 
 class Config {
     static host = 'https://laracasts.com'
     static enabled = true
     static interval = 30000
-    static debug = false
+    static debug = true
     static startTime = null
     static trashTime = 86400 * 3 * 1000
 

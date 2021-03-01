@@ -1,4 +1,4 @@
-import Log from "./log.js"
+import Log from "../both/log.js"
 import Config from "./config.js"
 
 const USER_REGEXP = new RegExp('window\.LARACASTS\s*=\s*([^;]+);')

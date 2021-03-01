@@ -1,6 +1,6 @@
-import Observer from "./lib/observer.js"
-import Log from "../lib/log.js"
-import Config from "../lib/config.js"
+import './index.scss'
+import Observer from "../lib/page/observer"
+import Log from "../lib/both/log"
 
 class LaravelNotify {
     static async start () {

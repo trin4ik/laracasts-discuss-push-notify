@@ -1,9 +1,9 @@
-import Config from '../lib/config.js'
-import Thread from '../lib/thread.js'
-import Notify from '../lib/notify.js'
-import Log from '../lib/log.js'
-import Request from '../lib/request.js'
-import User from "../lib/user.js"
+import Config from '../lib/background/config'
+import Thread from '../lib/background/thread'
+import Notify from '../lib/background/notify'
+import Log from '../lib/both/log'
+import Request from '../lib/background/request'
+import User from "../lib/background/user"
 
 class LaravelNotify {
 
@@ -48,134 +48,6 @@ class LaravelNotify {
         }
         setTimeout(() => this.refresh(), Config.interval)
     }
-
-    static async checkNewPost () {
-        if (this.enabled) {
-            await Promise.all(this.threads.map(async item => {
-                if (new Date() - new Date(item.updated_at) >= 86400 * 1000 * 7) {
-                    this.threads.removeThread(item.uri)
-                    return
-                }
-                console.log('check item', item)
-                try {
-                    const result = await fetch('https://laracasts.com' + item.uri, {
-                        method: 'GET',
-                        headers: {
-                            'Accept': 'application/json'
-                        }
-                    })
-                    const json = await result.json()
-                    console.log('check post', item, json, new Date(item.updated_at), new Date(json.updated_at), new Date(json.updated_at) - new Date(item.updated_at))
-                    if (new Date(json.updated_at) - new Date(item.updated_at) > 0) {
-                        this.createNotify(json)
-                    }
-                } catch (e) {
-                    console.log('error item', item, e)
-                }
-            }))
-        }
-        setTimeout(this.checkNewPost.bind(this), this.interval)
-    }
-
-    static createNotify (json) {
-
-        let id = ''
-        let lastReplie = json
-        while (
-            lastReplie.hasOwnProperty('replies') &&
-            (
-                (
-                    lastReplie.replies.hasOwnProperty('data') &&
-                    lastReplie.replies.data.length
-                ) ||
-                lastReplie.replies.length
-            )
-            ) {
-            if (lastReplie.replies.hasOwnProperty('data')) {
-                lastReplie = lastReplie.replies.data[lastReplie.replies.data.length - 1]
-            } else {
-                lastReplie = lastReplie.replies[lastReplie.replies.length - 1]
-            }
-            id = lastReplie.path
-        }
-        const data = {
-            title: json.title,
-            requireInteraction: true,
-            message: '@' + json.last_reply_username + ': ' + lastReplie.body_in_markdown,
-            iconUrl: 'laracasts.svg',
-            type: 'basic',
-        }
-
-        console.log('ololo', id, lastReplie, data)
-
-        Notify.create()
-        chrome.notifications.clear(id)
-        chrome.notifications.create(id, data, () => {
-            console.log('callback notify')
-        })
-    }
-
-    static onMessage (request, sender, sendResponse) {
-        const result = {
-            success: false,
-            error: 'unknown'
-        }
-
-        console.log('message', request, sender)
-
-        if (sender.tab) {
-            switch (request.action) {
-                case 'notify-click': {
-                    console.log('notify click', this.threads.find(item => item.uri === request.data.uri))
-                    if (this.threads.find(item => item.uri === request.data.uri)) {
-                        this.removeThread(request.data.uri)
-                        result.success = true
-                        result.data = false
-                    } else {
-                        this.addThread(request.data)
-                        result.success = true
-                        result.data = true
-                    }
-                    break
-                }
-                case 'check-notify': {
-                    result.success = true
-                    result.data = this.threads.find(item => item.uri === request.data)
-                    break
-                }
-            }
-        }
-
-
-        if (result.success) {
-            delete result.error
-        }
-
-        sendResponse(result)
-    }
-
-    static updateThread (id, data) {
-        let thread = this.threads.findIndex(item => item.uri === id)
-        console.log('update thread', id, data, thread)
-        if (thread !== -1) {
-            this.threads[thread] = { ...this.threads[thread], ...data }
-            chrome.storage.sync.set({ 'thread:list': this.threads })
-        }
-        console.log('new threads', this.threads)
-    }
-
-    static removeThread (uri) {
-        const newThreads = [...this.threads.filter(item => item.uri !== uri)]
-        this.threads = newThreads
-        chrome.storage.sync.set({ 'thread:list': newThreads })
-    }
-
-    static addThread (data) {
-        const newThreads = [...this.threads, data]
-        this.threads = newThreads
-        chrome.storage.sync.set({ 'thread:list': newThreads })
-    }
 }
 
 LaravelNotify.start()
-

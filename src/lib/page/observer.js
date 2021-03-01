@@ -1,6 +1,6 @@
-import camelCase from "../../vendor/lodash/camelCase.js"
-import Log from "../../lib/log.js"
-import Message from "./message.js"
+import camelCase from "lodash/camelCase"
+import Log from "../both/log"
+import Message from "./message"
 
 class Observer {
 
@@ -9,10 +9,8 @@ class Observer {
 
     static set isActiveButton (value) {
         this._isActiveButton = value
-        Log('set active button', value)
         this.observer.map(item => {
             if (item.item) {
-                Log('ooooooooo', item.item)
                 item.item.dispatchEvent(this.onChangeActive);
             }
         })

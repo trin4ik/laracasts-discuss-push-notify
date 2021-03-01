@@ -1,5 +1,5 @@
 import Config from "./config.js"
-import Log from "./log.js"
+import Log from "../both/log.js"
 import Notify from "./notify.js"
 import User from "./user.js"
 
