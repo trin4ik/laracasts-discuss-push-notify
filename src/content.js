@@ -1,11 +1,13 @@
-import './index.scss'
-import Observer from "../lib/page/observer"
-import Log from "../lib/both/log"
+import './content.scss'
+import Observer from "./lib/Observer"
+import Log from "./lib/Log"
+import Message from "./lib/Message"
 
-class LaravelNotify {
+class LaracastsContent {
     static async start () {
         if (this.checkUri()) {
             Log('uri match, sniff')
+
             await Observer.start()
         }
     }
@@ -15,4 +17,4 @@ class LaravelNotify {
     }
 }
 
-LaravelNotify.start()
+LaracastsContent.start()

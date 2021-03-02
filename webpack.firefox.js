@@ -1,8 +1,12 @@
 const { merge } = require('webpack-merge')
 const common = require('./webpack.config.js')
 const CopyPlugin = require('copy-webpack-plugin')
+const webpack = require('webpack')
+const WebExtWebpackPlugin = require('web-ext-webpack-plugin')
+const path = require('path')
 
 module.exports = merge(common, {
+    mode: 'production',
     plugins: [
         new CopyPlugin({
             patterns: [
@@ -10,8 +14,6 @@ module.exports = merge(common, {
                     from: "./src/manifest.json",
                     transform (buffer) {
                         const manifest = JSON.parse(buffer.toString());
-
-                        // make any modifications you like, such as
                         manifest.browser_specific_settings = {
                             "gecko": {
                                 "id": "laracasts-discuss-push-notify@twocomrades.ru"
@@ -21,6 +23,13 @@ module.exports = merge(common, {
                     }
                 }
             ]
-        })
+        }),
+        new webpack.DefinePlugin({
+            ENGINE: JSON.stringify('firefox')
+        }),
+        new WebExtWebpackPlugin({
+            sourceDir: path.resolve(__dirname, 'extension'),
+            startUrl: 'https://laracasts.com/discuss'
+        }),
     ]
 })

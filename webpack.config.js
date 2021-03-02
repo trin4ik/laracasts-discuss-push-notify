@@ -1,16 +1,19 @@
 const path = require('path')
-const CopyPlugin = require('copy-webpack-plugin')
+const CopyPlugin = require("copy-webpack-plugin")
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const ZipPlugin = require('zip-webpack-plugin')
 
 module.exports = {
-    mode: 'production',
+    mode: 'development',
+    devtool: false,
     entry: {
-        background: '/src/background/index.js',
-        settings: '/src/settings/index.js',
-        page: '/src/page/index.js',
+        background: './src/background.js',
+        content: './src/content.js',
+        options: './src/options.js',
     },
     module: {
         rules: [
@@ -20,8 +23,13 @@ module.exports = {
                 use: {
                     loader: "babel-loader",
                     options: {
-                        presets: ['@babel/preset-react'],
-                        plugins: ["@babel/plugin-proposal-class-properties"]
+                        presets: [
+                            '@babel/preset-env',
+                        ],
+                        plugins: [
+                            '@babel/plugin-proposal-class-properties',
+                            '@babel/transform-runtime',
+                        ]
                     }
                 }
             },
@@ -40,31 +48,35 @@ module.exports = {
         ]
     },
     plugins: [
+        new ZipPlugin({
+            filename: 'extension.zip'
+        }),
+        new MiniCssExtractPlugin(),
         new webpack.DefinePlugin({
             __VUE_OPTIONS_API__: true,
-            __VUE_PROD_DEVTOOLS__: false
+            __VUE_PROD_DEVTOOLS__: false,
+            ENGINE: JSON.stringify('firefox')
         }),
         new VueLoaderPlugin(),
-        new MiniCssExtractPlugin(),
+        new HtmlWebpackPlugin({
+            chunks: ['options'],
+            title: 'options',
+            template: "src/template.html",
+            templateParameters: {
+                scripts: ['browser-polyfill.js'],
+            },
+            filename: "options.html"
+        }),
         new CleanWebpackPlugin(),
         new CopyPlugin({
             patterns: [
-                { from: "src/image", to: "image" },
-                { from: "src/settings/index.html", to: "settings.html" },
+                { from: "./src/image/", to: 'image' },
+                { from: "./node_modules/webextension-polyfill/dist/browser-polyfill.js" },
             ],
         }),
     ],
-    optimization: {
-        minimize: true,
-
-    },
     output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: (pathData) => {
-            switch (pathData.chunk.name) {
-                default:
-                    return '[name].js'
-            }
-        },
+        path: path.resolve(__dirname, 'extension'),
+        filename: '[name].js'
     },
-};
+}

@@ -1,13 +1,12 @@
-import Config from "./config.js"
-import Log from "../both/log.js"
-import Notify from "./notify.js"
-import User from "./user.js"
+import Config from "./Config"
+import Log from "./Log"
+import Notify from "./Notify"
+import User from "./User"
 
 class Thread {
     static async list () {
-        return new Promise((resolve) => chrome.storage.local.get(['thread:list'], result => {
-            resolve(result['thread:list'] ? result['thread:list'] : [])
-        }))
+        const list = (await browser.storage.local.get(['thread:list']))['thread:list']
+        return list ?? []
     }
 
     static async find (data) {
@@ -19,9 +18,8 @@ class Thread {
         let list = await this.list()
         list = list.filter(item => item.path !== Config.purePath(uri))
         Log('remove thread', uri, list)
-        return new Promise((resolve) => chrome.storage.local.set({ 'thread:list': list }, () => {
-            resolve(true)
-        }))
+        await browser.storage.local.set({ 'thread:list': list })
+        return true
     }
 
     static async update (id, data) {
@@ -33,10 +31,9 @@ class Thread {
         })
         list[item] = { ...list[item], ...data }
 
-        return new Promise((resolve) => chrome.storage.local.set({ 'thread:list': list }, () => {
-            Log('update thread', data, list)
-            resolve(item)
-        }))
+        await browser.storage.local.set({ 'thread:list': list })
+
+        return item
     }
 
     static async create (data) {
@@ -46,10 +43,8 @@ class Thread {
             list.push(data)
         }
 
-        return new Promise((resolve) => chrome.storage.local.set({ 'thread:list': list }, () => {
-            Log('add thread', data, list)
-            resolve(true)
-        }))
+        await browser.storage.local.set({ 'thread:list': list })
+        return true
     }
 
     static async fetch (url) {
@@ -60,8 +55,7 @@ class Thread {
                     'Accept': 'application/json'
                 }
             })
-            const json = await result.json()
-            return json
+            return await result.json()
         } catch (e) {
             return false
         }
@@ -75,13 +69,17 @@ class Thread {
                 const lastReplie = this.getLastReplie(newItem)
                 if (lastReplie) {
                     if (User.username && User.username !== lastReplie.user.username) {
-                        await Notify.create(lastReplie.path, {
+                        const data = {
                             title: item.title,
-                            requireInteraction: true,
                             message: '@' + lastReplie.user.username + ': ' + lastReplie.body_in_markdown,
-                            iconUrl: '/image/laracasts.svg',
+                            iconUrl: browser.runtime.getURL("image/48.png"),
                             type: 'basic',
-                        })
+                        }
+                        if (ENGINE !== 'firefox') {
+                            data.requireInteraction = true
+                        }
+
+                        await Notify.create(lastReplie.path, data)
                     }
                 }
             }

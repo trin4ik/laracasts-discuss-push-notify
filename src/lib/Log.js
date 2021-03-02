@@ -1,4 +1,4 @@
-import Config from "../background/config.js"
+import Config from "./Config"
 
 const STACK_LINE_REGEX = /([a-z0-9\.-]+):(\d+):(\d+)\)?$/;
 

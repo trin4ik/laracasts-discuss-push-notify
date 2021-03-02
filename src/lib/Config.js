@@ -1,4 +1,4 @@
-import Log from "../both/log.js"
+import Log from "./Log"
 
 class Config {
     static host = 'https://laracasts.com'
@@ -21,17 +21,17 @@ class Config {
     }
 
     static async load () {
-        return new Promise((resolve) => chrome.storage.local.get(['config'], result => {
-            if (result['config']) {
-                Object.entries(result['config']).map(item => {
-                    this[item[0]] = item[1]
-                })
-            }
-            resolve({
-                enabled: this.enabled,
-                trashTime: this.trashTime
+
+        const config = (await browser.storage.local.get(['config']))['config']
+        if (config) {
+            Object.entries(config).map(item => {
+                this[item[0]] = item[1]
             })
-        }))
+        }
+        return {
+            enabled: this.enabled,
+            trashTime: this.trashTime
+        }
     }
 
     static async save (data) {
@@ -43,12 +43,13 @@ class Config {
             },
             ...data
         }
-        return new Promise((resolve) => chrome.storage.local.set({ 'config': data }, result => {
-            Object.entries(data).map(item => {
-                this[item[0]] = item[1]
-            })
-            resolve(data)
-        }))
+
+        await browser.storage.local.set({ 'config': data })
+        Object.entries(data).map(item => {
+            this[item[0]] = item[1]
+        })
+
+        return data
     }
 }
 

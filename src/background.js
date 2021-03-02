@@ -1,16 +1,16 @@
-import Config from '../lib/background/config'
-import Thread from '../lib/background/thread'
-import Notify from '../lib/background/notify'
-import Log from '../lib/both/log'
-import Request from '../lib/background/request'
-import User from "../lib/background/user"
+import Log from "./lib/Log"
+import Request from "./lib/Request"
+import User from "./lib/User"
+import Notify from "./lib/Notify"
+import Config from "./lib/Config"
+import Thread from "./lib/Thread"
 
-class LaravelNotify {
+class LaracastsBackground {
 
     static async start () {
         Log('start')
-        await User.fetch()
         Request.start()
+        await User.fetch()
         Notify.start()
         await this.refresh()
     }
@@ -50,4 +50,4 @@ class LaravelNotify {
     }
 }
 
-LaravelNotify.start()
+LaracastsBackground.start()

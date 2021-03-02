@@ -1,7 +1,5 @@
-import Log from "../both/log.js"
-import Config from "./config.js"
-
-const USER_REGEXP = new RegExp('window\.LARACASTS\s*=\s*([^;]+);')
+import Log from "./Log"
+import Config from "./Config"
 
 class User {
     static user = null

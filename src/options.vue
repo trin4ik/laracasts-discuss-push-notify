@@ -29,7 +29,8 @@
   </div>
 </template>
 <script>
-import Message from "../lib/page/message"
+import Message from "./lib/Message"
+import Log from "./lib/Log";
 
 export default {
   data () {
@@ -45,6 +46,7 @@ export default {
       this.config = config.data
 
       const threads = await Message.send('load-threads')
+      Log('threads', threads)
       this.threads = threads.data
       this.loaded = true
       this.$forceUpdate()
@@ -54,6 +56,7 @@ export default {
     async changeEnabled () {
       const tmp = !this.config.enabled
       const result = await Message.send('save-config', { enabled: tmp })
+      console.log('ololo', result)
       this.config.enabled = result.data.enabled
       this.$forceUpdate()
     },

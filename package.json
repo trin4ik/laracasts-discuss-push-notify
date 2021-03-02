@@ -1,36 +1,35 @@
 {
     "scripts": {
-        "chrome": "webpack --config webpack.chrome.js",
-        "firefox": "webpack --config webpack.firefox.js"
+        "start": "./node_modules/.bin/webpack --config webpack.config.js --watch",
+        "chrome": "./node_modules/.bin/webpack --config webpack.chrome.js",
+        "firefox": "./node_modules/.bin/webpack --config webpack.firefox.js"
     },
     "devDependencies": {
-        "@babel/cli": "^7.13.0",
-        "@babel/core": "^7.13.8",
         "@babel/plugin-proposal-class-properties": "^7.13.0",
-        "@babel/preset-env": "^7.13.8",
-        "@vue/compiler-sfc": "^3.0.6",
+        "@babel/plugin-transform-runtime": "^7.13.9",
+        "@babel/preset-env": "^7.13.9",
+        "@vue/compiler-sfc": "^3.0.7",
         "babel-loader": "^8.2.2",
         "clean-webpack-plugin": "^3.0.0",
         "copy-webpack-plugin": "^7.0.0",
-        "crx-hotreload": "^1.0.6",
-        "css-loader": "^5.1.0",
-        "css-minimizer-webpack-plugin": "^1.2.0",
+        "css-loader": "^5.1.1",
+        "html-webpack-plugin": "^5.2.0",
+        "lodash": "^4.17.21",
         "mini-css-extract-plugin": "^1.3.9",
         "path": "^0.12.7",
         "sass": "^1.32.8",
         "sass-loader": "^11.0.1",
+        "svg-to-png-loader": "^3.0.0",
         "vue-loader": "^16.1.2",
         "vue-template-compiler": "^2.6.12",
+        "web-ext-webpack-plugin": "hiikezoe/web-ext-webpack-plugin",
+        "webextension-polyfill": "^0.7.0",
         "webpack": "^5.24.2",
         "webpack-cli": "^4.5.0",
-        "webpack-dev-server": "^3.11.2",
-        "webpack-extension-reloader": "^1.1.4",
-        "webpack-merge": "^5.7.3"
+        "webpack-merge": "^5.7.3",
+        "zip-webpack-plugin": "^4.0.1"
     },
     "dependencies": {
-        "htm": "^3.0.4",
-        "lodash": "^4.17.21",
-        "preact": "^10.5.12",
-        "vue": "^3.0.6"
+        "vue": "^3.0.7"
     }
 }

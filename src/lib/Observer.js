@@ -1,6 +1,6 @@
 import camelCase from "lodash/camelCase"
-import Log from "../both/log"
-import Message from "./message"
+import Log from "./Log"
+import Message from "./Message"
 
 class Observer {
 
