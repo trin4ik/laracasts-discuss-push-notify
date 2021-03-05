@@ -1,8 +1,8 @@
 {
     "manifest_version": 2,
-    "name": "laracasts-discuss-push-notify",
+    "name": "Laracasts Discuss Push Notifications",
     "description": "add feature 'follow by push'",
-    "version": "0.3",
+    "version": "0.33",
     "icons": {
         "16": "image/16.png",
         "32": "image/32.png",

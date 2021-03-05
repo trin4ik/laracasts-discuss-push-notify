@@ -4,9 +4,14 @@ class Config {
     static host = 'https://laracasts.com'
     static enabled = true
     static interval = 30000
-    static debug = true
+    static debug = false
     static startTime = null
     static trashTime = 86400 * 3 * 1000
+    static sound = {
+        enabled: true,
+        volume: .5,
+        file: 'image/notify.ogg'
+    }
 
     static purePath (path, addslashes = true) {
         if (path.substr(0, 1) === '/') {
@@ -28,19 +33,13 @@ class Config {
                 this[item[0]] = item[1]
             })
         }
-        return {
-            enabled: this.enabled,
-            trashTime: this.trashTime
-        }
+        return this.toJson
     }
 
     static async save (data) {
         Log('save config', data)
         data = {
-            ...{
-                enabled: this.enabled,
-                trashTime: this.trashTime
-            },
+            ...this.toJson,
             ...data
         }
 
@@ -50,6 +49,18 @@ class Config {
         })
 
         return data
+    }
+
+    static get toJson () {
+        return {
+            host: this.host,
+            enabled: this.enabled,
+            interval: this.interval,
+            debug: this.debug,
+            startTime: this.startTime,
+            trashTime: this.trashTime,
+            sound: this.sound
+        }
     }
 }
 

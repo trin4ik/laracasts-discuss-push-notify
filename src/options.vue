@@ -8,6 +8,14 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="form-item">
+        <div class="form-label"><label for="sound">Notification sound</label></div>
+        <div class="form-input">
+          <input id="sound" type="checkbox" :value="config?.sound?.enabled" @change="changeSound()" />
+        </div>
+      </div>
+    </div>
     <div class="row title">
       <h2>Notifications:</h2>
       <button class="test" @click="test">test notify</button>
@@ -26,6 +34,7 @@
       <div class="center" v-if="!threads.filter(item => !item.remove).length"><span>no item</span></div>
     </div>
     <div class="loading" v-if="!loaded"></div>
+    <div class="version">version: {{ version }}</div>
   </div>
 </template>
 <script>
@@ -35,6 +44,7 @@ import Log from "./lib/Log";
 export default {
   data () {
     return {
+      version: browser.runtime.getManifest().version,
       config: {},
       threads: [],
       loaded: false
@@ -44,9 +54,9 @@ export default {
     (async () => {
       const config = await Message.send('load-config')
       this.config = config.data
+      Log('config', config)
 
       const threads = await Message.send('load-threads')
-      Log('threads', threads)
       this.threads = threads.data
       this.loaded = true
       this.$forceUpdate()
@@ -56,8 +66,12 @@ export default {
     async changeEnabled () {
       const tmp = !this.config.enabled
       const result = await Message.send('save-config', { enabled: tmp })
-      console.log('ololo', result)
       this.config.enabled = result.data.enabled
+      this.$forceUpdate()
+    },
+    async changeSound () {
+      const result = await Message.send('save-config', { sound: { ...this.config.sound, enabled: !this.config.sound.enabled } })
+      this.config.sound.enabled = result.data.sound.enabled
       this.$forceUpdate()
     },
     test () {
@@ -228,6 +242,12 @@ export default {
     background: #fff;
     padding: 5px 15px;
     color: #c8443f;
+  }
+
+  .version {
+    text-align: right;
+    margin-top: 10px;
+    color: #666;
   }
 }
 

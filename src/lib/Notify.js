@@ -13,6 +13,15 @@ class Notify {
         const all = await browser.notifications.getAll()
         if (!all.hasOwnProperty(id)) {
             await browser.notifications.create(id, data)
+
+            await Config.load()
+            if (Config.sound.enabled) {
+                const sound = new Audio(browser.runtime.getURL(Config.sound.file))
+                sound.volume = Config.sound.volume
+                sound.play()
+            }
+
+
             return true
         }
         return false
@@ -45,7 +54,7 @@ class Notify {
             data.requireInteraction = true
         }
 
-        Notify.create('/discuss', data)
+        this.create('/discuss/channels/general-discussion/push-notify-extension-for-laracasts-discuss-chrome-firefox', data)
     }
 }
 

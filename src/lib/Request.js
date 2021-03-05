@@ -7,14 +7,11 @@ import Log from "./Log";
 class Request extends RequestParent {
 
     static async loadConfig () {
-        return {
-            enabled: Config.enabled,
-            host: Config.host
-        }
+        return Config.toJson
     }
 
     static async saveConfig (data) {
-        return await Config.save({ enabled: data.enabled })
+        return await Config.save(data)
     }
 
     static async testNotify () {
