@@ -99,7 +99,7 @@ class Observer {
             if (typeof this[camelCase('observe-' + item.name)] === 'function') {
                 item.started = true
                 item.observer = new MutationObserver(async () => {
-                    console.log('observe')
+                    Log('observe')
                     if (document.querySelector(item.selector)) {
                         const observable = this[camelCase('observe-' + item.name)]()
                         if (observable) {

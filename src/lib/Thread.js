@@ -5,7 +5,13 @@ import User from "./User"
 
 class Thread {
     static async list () {
-        const list = (await browser.storage.local.get(['thread:list']))['thread:list']
+        let list = await browser.storage.local.get(['thread:list'])
+        list = list['thread:list'] ?? []
+        if (list.length) {
+            browser.browserAction.setBadgeText({ text: list.length.toString() })
+        } else {
+            browser.browserAction.setBadgeText({ text: '' })
+        }
         return list ?? []
     }
 

@@ -2,7 +2,8 @@
     "scripts": {
         "start": "./node_modules/.bin/webpack --config webpack.config.js --watch",
         "chrome": "./node_modules/.bin/webpack --config webpack.chrome.js",
-        "firefox": "./node_modules/.bin/webpack --config webpack.firefox.js"
+        "firefox": "./node_modules/.bin/webpack --config webpack.firefox.js",
+        "debug:options": "./node_modules/.bin/webpack serve --config webpack.debug.options.js"
     },
     "devDependencies": {
         "@babel/plugin-proposal-class-properties": "^7.13.0",
@@ -19,6 +20,7 @@
         "path": "^0.12.7",
         "sass": "^1.32.8",
         "sass-loader": "^11.0.1",
+        "spectre.css": "^0.5.9",
         "svg-to-png-loader": "^3.0.0",
         "vue-loader": "^16.1.2",
         "vue-template-compiler": "^2.6.12",
@@ -26,6 +28,7 @@
         "webextension-polyfill": "^0.7.0",
         "webpack": "^5.24.2",
         "webpack-cli": "^4.5.0",
+        "webpack-dev-server": "^3.11.2",
         "webpack-merge": "^5.7.3",
         "zip-webpack-plugin": "^4.0.1"
     },
