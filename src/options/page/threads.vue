@@ -2,7 +2,7 @@
   <div class="list">
     <div class="list-item transition" v-for="item in list" :class="{remove: item.remove}" :key="item.path">
       <div class="title">
-        <a :href="item.path" v-html="item.title" />
+        <a :href="'https://laracasts.com' + item.path" v-html="item.title" target="_blank" />
       </div>
       <div class="action">
         <button class="btn btn-sm btn-error" @click="remove(item.path)"><i class="icon icon-delete"></i></button>
@@ -22,7 +22,7 @@ export default {
   data () {
     return {
       list: [],
-      loaded: false
+      loaded: false,
     }
   },
   mounted () {
