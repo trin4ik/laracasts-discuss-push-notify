@@ -55,7 +55,6 @@ module.exports = {
         new webpack.DefinePlugin({
             __VUE_OPTIONS_API__: true,
             __VUE_PROD_DEVTOOLS__: false,
-            ENGINE: JSON.stringify('firefox')
         }),
         new VueLoaderPlugin(),
         new HtmlWebpackPlugin({
