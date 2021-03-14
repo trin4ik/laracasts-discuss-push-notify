@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const ZipPlugin = require('zip-webpack-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 
 module.exports = {
     mode: 'development',
@@ -77,5 +78,12 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, 'extension'),
         filename: '[name].js'
+    },
+    optimization: {
+        minimize: true,
+        minimizer: [
+            '...',
+            new CssMinimizerPlugin(),
+        ],
     },
 }
