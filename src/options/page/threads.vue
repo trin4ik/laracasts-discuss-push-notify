@@ -31,7 +31,7 @@ export default {
       this.list = list.data
       this.$nextTick(() => {
         this.loaded = true
-        this.$emit('setThreadCount', this.list.length)
+        this.$emit('setCount', this.list.length, 'threads')
       })
     })()
   },

@@ -4,6 +4,7 @@ import User from "./lib/User"
 import Notify from "./lib/Notify"
 import Config from "./lib/Config"
 import Thread from "./lib/Thread"
+import Category from "./lib/Category"
 
 class LaracastsBackground {
 
@@ -12,6 +13,8 @@ class LaracastsBackground {
         Request.start()
         await User.fetch()
         Notify.start()
+        await Category.load()
+        await Category.refresh()
         await this.refresh()
     }
 

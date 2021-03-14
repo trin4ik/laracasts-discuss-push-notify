@@ -18,10 +18,10 @@ class Notify {
             if (Config.sound.enabled) {
                 const sound = new Audio(browser.runtime.getURL(Config.sound.file))
                 sound.volume = Config.sound.volume
-                sound.play()
+                sound.addEventListener("canplay", event => {
+                    sound.play()
+                })
             }
-
-
             return true
         }
         return false

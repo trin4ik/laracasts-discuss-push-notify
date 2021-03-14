@@ -3,7 +3,7 @@
         "start": "./node_modules/.bin/webpack --config webpack.config.js --watch",
         "chrome": "./node_modules/.bin/webpack --config webpack.chrome.js",
         "firefox": "./node_modules/.bin/webpack --config webpack.firefox.js",
-        "debug:options": "./node_modules/.bin/webpack serve --config webpack.debug.options.js"
+        "build:options": "./node_modules/.bin/webpack serve --config webpack.debug.options.js"
     },
     "devDependencies": {
         "@babel/plugin-proposal-class-properties": "^7.13.0",

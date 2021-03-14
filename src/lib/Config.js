@@ -4,13 +4,14 @@ class Config {
     static host = 'https://laracasts.com'
     static enabled = true
     static interval = 30000
+    static refreshCategoryInterval = 60000
     static debug = true
     static startTime = null
     static trashTime = 86400 * 3 * 1000
     static sound = {
         enabled: true,
         volume: .5,
-        file: 'image/notify.ogg'
+        file: 'image/notify.mp3'
     }
 
     static purePath (path, addslashes = true) {
@@ -30,6 +31,10 @@ class Config {
         const config = (await browser.storage.local.get(['config']))['config']
         if (config) {
             Object.entries(config).map(item => {
+                if (!this.toJson.hasOwnProperty(item[0])) return
+                if (item[0] === 'sound') {
+                    item[1].file = 'image/notify.mp3'
+                }
                 this[item[0]] = item[1]
             })
         }
@@ -57,7 +62,6 @@ class Config {
             enabled: this.enabled,
             interval: this.interval,
             debug: this.debug,
-            startTime: this.startTime,
             trashTime: this.trashTime,
             sound: this.sound
         }
@@ -65,5 +69,4 @@ class Config {
 }
 
 Config.startTime = new Date()
-
 export default Config

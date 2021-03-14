@@ -1,8 +1,9 @@
 import RequestParent from "./extends/Request"
 import Config from "./Config"
 import Thread from "./Thread"
-import Notify from "./Notify";
-import Log from "./Log";
+import Notify from "./Notify"
+import Log from "./Log"
+import Category from "./Category"
 
 class Request extends RequestParent {
 
@@ -12,6 +13,14 @@ class Request extends RequestParent {
 
     static async saveConfig (data) {
         return await Config.save(data)
+    }
+
+    static async loadCategories () {
+        return Category.toJson
+    }
+
+    static async saveCategories (data) {
+        return await Category.save(data)
     }
 
     static async testNotify () {

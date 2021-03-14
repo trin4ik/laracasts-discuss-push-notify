@@ -3,7 +3,7 @@
     <ul class="tab">
       <li v-for="(tab, index) in tabs" class="tab-item" :class="{active: activeTab === index}"
           @click="activeTab = index">
-        <a href="#" :class="{badge: tab.component === 'threads' && threadCount}" :data-badge="threadCount">
+        <a href="#" :class="{badge: count[tab.component]}" :data-badge="count[tab.component]">
           {{ tab.title }}
         </a>
       </li>
@@ -15,7 +15,8 @@
       <div class="content-wrapper" :style="wrapperStyle">
         <div v-for="tab in tabs" class="component-inner">
           <page-options v-if="tab.component === 'options'" />
-          <page-threads v-if="tab.component === 'threads'" @setThreadCount="setThreadCount" />
+          <page-threads v-if="tab.component === 'threads'" @setCount="setCount" />
+          <page-category v-if="tab.component === 'category'" @setCount="setCount" />
         </div>
       </div>
     </div>
@@ -27,11 +28,13 @@ import config from "./config"
 import Options from './page/options.vue'
 import Threads from './page/threads.vue'
 import Message from "../lib/Message"
+import Category from "./page/category.vue"
 
 export default {
   components: {
     'page-options': Options,
-    'page-threads': Threads
+    'page-threads': Threads,
+    'page-category': Category
   },
   data () {
     return {
@@ -44,11 +47,21 @@ export default {
         {
           title: 'Threads',
           component: 'threads'
+        },
+        {
+          title: 'Categories',
+          component: 'category'
         }
       ],
       activeTab: 0,
       loaded: false,
-      threadCount: 0
+      threadCount: 0,
+      indexCount: 0,
+      count: {
+        options: 0,
+        threads: 0,
+        index: 0
+      }
     }
   },
   mounted () {
@@ -60,8 +73,8 @@ export default {
     test () {
       Message.send('test-notify')
     },
-    setThreadCount (count) {
-      this.threadCount = count
+    setCount (count, component) {
+      this.count[component] = count
     }
   },
   computed: {
